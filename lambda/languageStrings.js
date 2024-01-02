@@ -13,8 +13,8 @@ module.exports = {
       translation: {
         SKILL_NAME: "Zé notinha",
         NORMAL_GAMESCORE_MESSAGE: [
-            `A nota do jogo ${gameName} é ${gameScore}`,
-            `O joguinho que você pediu a nota é ${gameScore}}`
+            "A nota do jogo ${gameName} é ${gameScore}",
+            "O joguinho que você pediu a nota é ${gameScore}"
         ],
         HELLO_MESSAGE: [
           "Olá Zé Notinha, aqui você pode pedir uma nota de um jogo. Qual você deseja?",

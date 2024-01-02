@@ -41,13 +41,14 @@ const GetGameScoreIntentHandler = {
         const gameName = intent.slots.game_name.value;
     
         const gameData = await metacritic.getGame(gameName);
+
+        const gameScore = gameData.data.results[0].metacritic;
         
-        // const speakOutput = `A nota do jogo ${gameName} é ${gameData.data.results[0].metacritic}`;
-        const speakOutput = requestAttributes.t("NORMAL_GAMESCORE_MESSAGE", {gameName : gameName,  gameScore : gameData.data.results[0].metacritic});
+        const speakOutput = interpolateString(requestAttributes.t("NORMAL_GAMESCORE_MESSAGE"), { gameName, gameScore });
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
-            .reprompt('Deseja pedir notinha sobre outro jogo?')
+            .reprompt(requestAttributes.t("REPROMPT"))
             .getResponse();
     }
 };

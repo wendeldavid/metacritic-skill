@@ -17,3 +17,10 @@ module.exports.getS3PreSignedUrl = function getS3PreSignedUrl(s3ObjectKey) {
     return s3PreSignedUrl;
 
 }
+
+module.exports.interpolateString = function interpolateString(template, valueMap) {
+    return Object.keys(valueMap).reduce((result, key) => {
+      const regex = new RegExp(`\\$\\{${key}\\}`, 'g');
+      return result.replace(regex, valueMap[key]);
+    }, template);
+  }
