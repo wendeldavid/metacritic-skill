@@ -63,7 +63,7 @@ const GetGameScoreIntentHandler = {
 
         let outputSpeak = `
             <speak>
-            ${ospeakOutput}
+            ${speakOutput}
             <break time='2s'/>
             <prosody>${ironicText}</prosody>
             </speak>
