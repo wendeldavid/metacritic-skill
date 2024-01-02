@@ -6,7 +6,7 @@
 const Alexa = require('ask-sdk-core');
 const i18n = require("i18next");
 const languageStrings = require("./languageStrings");
-require("./utils.js");
+const utils = require("./utils.js");
 const sprintf = require("i18next-sprintf-postprocessor");
 
 const metacritic = require("./metacritic.js");
@@ -45,7 +45,7 @@ const GetGameScoreIntentHandler = {
 
         const gameScore = gameData.data.results[0].metacritic;
         
-        const speakOutput = interpolateString(requestAttributes.t("NORMAL_GAMESCORE_MESSAGE"), { gameName, gameScore });
+        const speakOutput = utils.interpolateString(requestAttributes.t("NORMAL_GAMESCORE_MESSAGE"), { gameName, gameScore });
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
