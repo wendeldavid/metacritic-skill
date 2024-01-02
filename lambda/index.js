@@ -4,6 +4,9 @@
  * session persistence, api calls, and more.
  * */
 const Alexa = require('ask-sdk-core');
+const i18n = require("i18next");
+const languageStrings = require("./languageStrings");
+const sprintf = require("i18next-sprintf-postprocessor");
 
 const metacritic = require("./metacritic.js");
 
