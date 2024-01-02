@@ -54,9 +54,9 @@ const GetGameScoreIntentHandler = {
         let speakOutput = interpolateString(requestAttributes.t("NORMAL_GAMESCORE_MESSAGE"), { gameName, gameScore });
 
         if (gameScore >= 90) {
-            speakOutput = interpolateString(requestAttributes.t("IRONIC_HIGH_SCORE_MESSAGE"), { gameName, gameScore });
+            speakOutput += interpolateString(requestAttributes.t("IRONIC_HIGH_SCORE_MESSAGE"), { gameName, gameScore });
         } else if (gameScore <= 60) {
-            speakOutput = interpolateString(requestAttributes.t("IRONIC_LOW_SCORE_MESSAGE"), { gameName, gameScore });
+            speakOutput += interpolateString(requestAttributes.t("IRONIC_LOW_SCORE_MESSAGE"), { gameName, gameScore });
         }
 
         return handlerInput.responseBuilder
