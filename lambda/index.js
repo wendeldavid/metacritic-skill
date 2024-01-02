@@ -43,7 +43,7 @@ const GetGameScoreIntentHandler = {
         const gameData = await metacritic.getGame(gameName);
         
         // const speakOutput = `A nota do jogo ${gameName} é ${gameData.data.results[0].metacritic}`;
-        const speakOutput = requestAttributes.t("NORMAL_GAMESCORE_MESSAGE", gameName,  gameData.data.results[0].metacritic);
+        const speakOutput = requestAttributes.t("NORMAL_GAMESCORE_MESSAGE", {gameName : gameName,  gameScore : gameData.data.results[0].metacritic});
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
