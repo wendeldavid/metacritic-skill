@@ -6,10 +6,16 @@
 const Alexa = require('ask-sdk-core');
 const i18n = require("i18next");
 const languageStrings = require("./languageStrings");
-const utils = require("./utils");
 const sprintf = require("i18next-sprintf-postprocessor");
 
 const metacritic = require("./metacritic.js");
+
+const interpolateString = function(template, valueMap) {
+    return Object.keys(valueMap).reduce((result, key) => {
+      const regex = new RegExp(`\\$\\{${key}\\}`, 'g');
+      return result.replace(regex, valueMap[key]);
+    }, template);
+}
 
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
@@ -45,7 +51,7 @@ const GetGameScoreIntentHandler = {
 
         const gameScore = gameData.data.results[0].metacritic;
         
-        const speakOutput = utils.interpolateString(requestAttributes.t("NORMAL_GAMESCORE_MESSAGE"), { gameName, gameScore });
+        const speakOutput = interpolateString(requestAttributes.t("NORMAL_GAMESCORE_MESSAGE"), { gameName, gameScore });
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
