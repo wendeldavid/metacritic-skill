@@ -51,16 +51,26 @@ const GetGameScoreIntentHandler = {
 
         const gameScore = gameData.data.results[0].metacritic;
         
-        let speakOutput = interpolateString(requestAttributes.t("NORMAL_GAMESCORE_MESSAGE"), { gameName, gameScore });
+        const speakOutput = interpolateString(requestAttributes.t("NORMAL_GAMESCORE_MESSAGE"), { gameName, gameScore });
+
+        let ironicText;
 
         if (gameScore >= 90) {
-            speakOutput += interpolateString(requestAttributes.t("IRONIC_HIGH_SCORE_MESSAGE"), { gameName, gameScore });
+            ironicText = interpolateString(requestAttributes.t("IRONIC_HIGH_SCORE_MESSAGE"), { gameName, gameScore });
         } else if (gameScore <= 60) {
-            speakOutput += interpolateString(requestAttributes.t("IRONIC_LOW_SCORE_MESSAGE"), { gameName, gameScore });
+            ironicText = interpolateString(requestAttributes.t("IRONIC_LOW_SCORE_MESSAGE"), { gameName, gameScore });
         }
 
+        let outputSpeak = `
+            <speak>
+            ${ospeakOutput}
+            <break time='2s'/>
+            <prosody>${ironicText}</prosody>
+            </speak>
+        `;
+
         return handlerInput.responseBuilder
-            .speak(speakOutput)
+            .speak(outputSpeak)
             .reprompt(requestAttributes.t("REPROMPT"))
             .getResponse();
     }
