@@ -5,12 +5,14 @@
  * */
 const Alexa = require('ask-sdk-core');
 
+const metacritic = require("./metacritic.js");
+
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speakOutput = 'Welcome, you can say Hello or Help. Which would you like to try?';
+        const speakOutput = 'Olá Zé Notinha, aqui você pode pedir uma nota de jogo, filme, série ou música, O que você deseja?';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -19,17 +21,29 @@ const LaunchRequestHandler = {
     }
 };
 
-const HelloWorldIntentHandler = {
+const GameIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'HelloWorldIntent';
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'GameIntent';
     },
-    handle(handlerInput) {
-        const speakOutput = 'Hello World!';
+    async handle(handlerInput) {
+        console.log(handlerInput);
+
+        const request = handlerInput.requestEnvelope.request;
+        const intent = request.intent;
+    
+        console.log(intent.slots.game_name.slotValue);
+        const gameName = intent.slots.game_name.value;
+    
+        const gameData = await metacritic.getGame(gameName);
+        
+        const metacritic_score = gameData.metacritic;
+
+        const speakOutput = `A nota do jogo ${gameName} é ${metacritic_score}`;
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
-            //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
+            // .reprompt('add a reprompt if you want to keep the session open for the user to respond')
             .getResponse();
     }
 };
@@ -40,7 +54,7 @@ const HelpIntentHandler = {
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.HelpIntent';
     },
     handle(handlerInput) {
-        const speakOutput = 'You can say hello to me! How can I help?';
+        const speakOutput = 'Você pode pedir uma nota sobre algum jogo de videogame, filme, série ou música.';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -56,7 +70,7 @@ const CancelAndStopIntentHandler = {
                 || Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.StopIntent');
     },
     handle(handlerInput) {
-        const speakOutput = 'Goodbye!';
+        const speakOutput = 'Adeus!';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -74,7 +88,7 @@ const FallbackIntentHandler = {
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.FallbackIntent';
     },
     handle(handlerInput) {
-        const speakOutput = 'Sorry, I don\'t know about that. Please try again.';
+        const speakOutput = 'Perdão, não entendi, poderia tentar de novo?';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -126,7 +140,7 @@ const ErrorHandler = {
         return true;
     },
     handle(handlerInput, error) {
-        const speakOutput = 'Sorry, I had trouble doing what you asked. Please try again.';
+        const speakOutput = 'Perdão, tive um problema processando o que você pediu. Por favor, tente novamente.';
         console.log(`~~~~ Error handled: ${JSON.stringify(error)}`);
 
         return handlerInput.responseBuilder
@@ -144,7 +158,7 @@ const ErrorHandler = {
 exports.handler = Alexa.SkillBuilders.custom()
     .addRequestHandlers(
         LaunchRequestHandler,
-        HelloWorldIntentHandler,
+        GameIntentHandler,
         HelpIntentHandler,
         CancelAndStopIntentHandler,
         FallbackIntentHandler,
@@ -152,5 +166,5 @@ exports.handler = Alexa.SkillBuilders.custom()
         IntentReflectorHandler)
     .addErrorHandlers(
         ErrorHandler)
-    .withCustomUserAgent('sample/hello-world/v1.2')
+    // .withCustomUserAgent('sample/hello-world/v1.2')
     .lambda();
