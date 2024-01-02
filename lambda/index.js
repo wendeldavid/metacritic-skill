@@ -69,7 +69,7 @@ const CancelAndStopIntentHandler = {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
             && (Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.CancelIntent'
                 || Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.StopIntent'
-                || request.intent.name === "AMAZON.NoIntent"));
+                || request.intent.name === "AMAZON.NoIntent");
     },
     handle(handlerInput) {
         const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
