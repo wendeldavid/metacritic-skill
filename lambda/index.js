@@ -12,11 +12,11 @@ const LaunchRequestHandler = {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speakOutput = 'Olá Zé Notinha, aqui você pode pedir uma nota de um jogo. Qual você deseja?';
+        const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
 
         return handlerInput.responseBuilder
-            .speak(speakOutput)
-            .reprompt(speakOutput)
+            .speak(requestAttributes.t("HELLO_MESSAGE"))
+            .reprompt(requestAttributes.t("REPROMPT"))
             .getResponse();
     }
 };
@@ -29,6 +29,8 @@ const GetGameScoreIntentHandler = {
     async handle(handlerInput) {
         console.log(handlerInput);
 
+        const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
+
         const request = handlerInput.requestEnvelope.request;
         const intent = request.intent;
     
@@ -37,11 +39,12 @@ const GetGameScoreIntentHandler = {
     
         const gameData = await metacritic.getGame(gameName);
         
-        const speakOutput = `A nota do jogo ${gameName} é ${gameData.data.results[0].metacritic}`;
+        // const speakOutput = `A nota do jogo ${gameName} é ${gameData.data.results[0].metacritic}`;
+        const speakOutput = requestAttributes.t("NORMAL_GAMESCORE_MESSAGE", gameName,  gameData.data.results[0].metacritic);
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
-            // .reprompt('add a reprompt if you want to keep the session open for the user to respond')
+            .reprompt('Deseja pedir notinha sobre outro jogo?')
             .getResponse();
     }
 };
@@ -52,11 +55,11 @@ const HelpIntentHandler = {
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.HelpIntent';
     },
     handle(handlerInput) {
-        const speakOutput = 'Você pode pedir uma nota sobre algum jogo de videogame, filme, série ou música.';
-
+        const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
+        
         return handlerInput.responseBuilder
-            .speak(speakOutput)
-            .reprompt(speakOutput)
+            .speak(requestAttributes.t("HELP_MESSAGE"))
+            .reprompt(requestAttributes.t("HELP_REPROMPT"))
             .getResponse();
     }
 };
@@ -65,13 +68,15 @@ const CancelAndStopIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
             && (Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.CancelIntent'
-                || Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.StopIntent');
+                || Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.StopIntent'
+                || request.intent.name === "AMAZON.NoIntent");
     },
     handle(handlerInput) {
-        const speakOutput = 'Adeus!';
+        const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
 
         return handlerInput.responseBuilder
-            .speak(speakOutput)
+            .speak(requestAttributes.t("STOP_MESSAGE"))
+            .withShouldEndSession(true)
             .getResponse();
     }
 };
@@ -86,11 +91,11 @@ const FallbackIntentHandler = {
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.FallbackIntent';
     },
     handle(handlerInput) {
-        const speakOutput = 'Perdão, não entendi, poderia tentar de novo?';
+        const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
 
         return handlerInput.responseBuilder
-            .speak(speakOutput)
-            .reprompt(speakOutput)
+            .speak(requestAttributes.t("FALLBACK_MESSAGE"))
+            .reprompt(requestAttributes.t("FALLBACK_REPROMPT"))
             .getResponse();
     }
 };
@@ -138,16 +143,54 @@ const ErrorHandler = {
         return true;
     },
     handle(handlerInput, error) {
-        const speakOutput = 'Perdão, tive um problema processando o que você pediu. Por favor, tente novamente.';
-        console.log(`~~~~ Error handled: ${JSON.stringify(error)}`);
+        console.log(`Error handled: ${error.message}`);
+        console.log(`Error stack: ${error.stack}`);
+        console.log(handlerInput.requestEnvelope.request.error);
+
+        const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
 
         return handlerInput.responseBuilder
-            .speak(speakOutput)
-            .reprompt(speakOutput)
+            .speak(requestAttributes.t("ERROR_MESSAGE"))
+            .reprompt(requestAttributes.t("ERROR_MESSAGE"))
             .getResponse();
     }
 };
 
+const LocalizationInterceptor = {
+  process(handlerInput) {
+    const localizationClient = i18n.use(sprintf).init({
+      lng: handlerInput.requestEnvelope.request.locale,
+      fallbackLng: "en", // fallback to EN if locale doesn't exist
+      resources: languageStrings,
+    });
+
+    localizationClient.localize = function () {
+      const args = arguments;
+      let values = [];
+
+      for (var i = 1; i < args.length; i++) {
+        values.push(args[i]);
+      }
+      const value = i18n.t(args[0], {
+        returnObjects: true,
+        postProcess: "sprintf",
+        sprintf: values,
+      });
+
+      if (Array.isArray(value)) {
+        return value[Math.floor(Math.random() * value.length)];
+      } else {
+        return value;
+      }
+    };
+
+    const attributes = handlerInput.attributesManager.getRequestAttributes();
+    attributes.t = function (...args) {
+      // pass on arguments to the localizationClient
+      return localizationClient.localize(...args);
+    };
+  },
+};
 /**
  * This handler acts as the entry point for your skill, routing all request and response
  * payloads to the handlers above. Make sure any new handlers or interceptors you've
@@ -162,7 +205,8 @@ exports.handler = Alexa.SkillBuilders.custom()
         FallbackIntentHandler,
         SessionEndedRequestHandler,
         IntentReflectorHandler)
+    .addRequestInterceptors(LocalizationInterceptor)
     .addErrorHandlers(
         ErrorHandler)
-    // .withCustomUserAgent('sample/hello-world/v1.2')
+    .withCustomUserAgent('sskill/metacritic-rawg')
     .lambda();
