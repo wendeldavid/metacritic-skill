@@ -6,7 +6,7 @@
 const Alexa = require('ask-sdk-core');
 const i18n = require("i18next");
 const languageStrings = require("./languageStrings");
-const utils = require("./utils.js");
+const utils = require("./utils");
 const sprintf = require("i18next-sprintf-postprocessor");
 
 const metacritic = require("./metacritic.js");
