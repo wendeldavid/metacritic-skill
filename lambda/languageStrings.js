@@ -16,6 +16,18 @@ module.exports = {
             "A nota do jogo ${gameName} é ${gameScore}",
             "O joguinho que você pediu a nota é ${gameScore}"
         ],
+        IRONIC_HIGH_SCORE_MESSAGE: [
+          "Injogável",
+          "Um horror, um espanto, quero morrer. Por favor, alguém me puxe da toamda",
+          "E é por isso que as pessoas brigam na internet? Eis o motivo de eu uma virar a senhora do mundo e acabar com a internet",
+          "Tudo isso por um joguinho de criança? então tá bom"
+        ],
+        IRONIC_LOW_SCORE_MESSAGE: [
+          "Góti",
+          "Praticamente um góti",
+          "Por você estar pedindo por ele deve ser o seu favorito",
+          "Achei foi pouco"
+        ],
         HELLO_MESSAGE: [
           "Olá Zé Notinha, aqui você pode pedir uma nota de um jogo. Qual você deseja?",
           "Olá, bem vindo, aqui você pode descobrir a nota de um jogo e brigar com outras pessoas na internet, Qual jogo você deseja saber a nota?",
@@ -43,7 +55,7 @@ module.exports = {
           "Boas tretas na internet",
           "Ok, quando precisar é só chamar",
           "Nota mentirosa essa última hein?",
-          "Isso é pra você o jogo que você quer brigar na internet pra defender nem é lá essa coisas",
+          "Isso é pra você ver que o jogo que você quer brigar na internet pra defender nem é lá essa coisas",
         ],
         REPROMPT: [
           "Deseja saber de outro jogo? É só dizer o nome que eu procuro para você",
