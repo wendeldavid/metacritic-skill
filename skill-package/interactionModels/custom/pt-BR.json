@@ -15,16 +15,17 @@
           "samples": []
         },
         {
-          "slots": [],
-          "name": "HelloWorldIntent",
+          "slots": [
+            {
+              "name": "game_name",
+              "type": "AMAZON.VideoGame"
+            }
+          ],
+          "name": "GetGameScore",
           "samples": [
-            "olá",
-            "como vai você",
-            "diga oi mundo",
-            "diga oi",
-            "oi",
-            "diga olá mundo",
-            "diga olá"
+            "notinha do jogo {game_name}",
+            "nota do jogo {game_name}",
+            "qual a nota do jogo {game_name}"
           ]
         },
         {
@@ -33,7 +34,7 @@
         }
       ],
       "types": [],
-      "invocationName": "change me"
+      "invocationName": "zé notinha"
     }
   }
 }
