@@ -23,7 +23,7 @@
           ],
           "name": "GetGameScoreIntent",
           "samples": [
-            "{game_name",
+            "{game_name}",
             "notinha do jogo {game_name}",
             "nota do jogo {game_name}",
             "qual a nota do jogo {game_name}"
