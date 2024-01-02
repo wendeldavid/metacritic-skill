@@ -12,7 +12,7 @@ const LaunchRequestHandler = {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speakOutput = 'Olá Zé Notinha, aqui você pode pedir uma nota de jogo, filme, série ou música, O que você deseja?';
+        const speakOutput = 'Olá Zé Notinha, aqui você pode pedir uma nota de um jogo. Qual você deseja?';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -21,10 +21,10 @@ const LaunchRequestHandler = {
     }
 };
 
-const GameIntentHandler = {
+const GetGameScoreIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'GameIntent';
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'GetGameScoreIntent';
     },
     async handle(handlerInput) {
         console.log(handlerInput);
@@ -158,7 +158,7 @@ const ErrorHandler = {
 exports.handler = Alexa.SkillBuilders.custom()
     .addRequestHandlers(
         LaunchRequestHandler,
-        GameIntentHandler,
+        GetGameScoreIntent,
         HelpIntentHandler,
         CancelAndStopIntentHandler,
         FallbackIntentHandler,
