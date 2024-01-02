@@ -61,13 +61,17 @@ const GetGameScoreIntentHandler = {
             ironicText = interpolateString(requestAttributes.t("IRONIC_LOW_SCORE_MESSAGE"), { gameName, gameScore });
         }
 
-        let outputSpeak = `
-            <speak>
-            ${speakOutput}
-            <break time='2s'/>
-            <prosody>${ironicText}</prosody>
-            </speak>
-        `;
+        let outputSpeak = speakOutput;
+
+        if (ironicText) {
+            outputSpeak = `
+                <speak>
+                ${speakOutput}
+                <break time='2s'/>
+                <prosody>${ironicText}</prosody>
+                </speak>
+            `;
+        }
 
         return handlerInput.responseBuilder
             .speak(outputSpeak)
