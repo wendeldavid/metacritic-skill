@@ -57,7 +57,7 @@ const GetGameScoreIntentHandler = {
 
         if (gameScore >= 90) {
             ironicText = interpolateString(requestAttributes.t("IRONIC_HIGH_SCORE_MESSAGE"), { gameName, gameScore });
-        } else if (gameScore <= 60) {
+        } else if (gameScore <= 70) {
             ironicText = interpolateString(requestAttributes.t("IRONIC_LOW_SCORE_MESSAGE"), { gameName, gameScore });
         }
 
@@ -67,7 +67,7 @@ const GetGameScoreIntentHandler = {
             outputSpeak = `
                 <speak>
                 ${speakOutput}
-                <break time='2s'/>
+                <break time='1s'/>
                 <prosody>${ironicText}</prosody>
                 </speak>
             `;
