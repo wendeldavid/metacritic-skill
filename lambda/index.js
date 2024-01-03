@@ -44,12 +44,11 @@ const GetGameScoreIntentHandler = {
         const request = handlerInput.requestEnvelope.request;
         const intent = request.intent;
     
-        console.log(intent.slots.game_name.slotValue);
         const gameName = intent.slots.game_name.value;
     
         const gameData = await metacritic.getGame(gameName);
 
-        const gameScore = gameData.data.results[0].metacritic;
+        const gameScore = gameData.data.results[0].metacritic || Math.trunc(gameData.data.results[0].score);
         
         const speakOutput = interpolateString(requestAttributes.t("NORMAL_GAMESCORE_MESSAGE"), { gameName, gameScore });
 
