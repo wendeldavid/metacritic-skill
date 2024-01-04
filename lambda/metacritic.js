@@ -7,7 +7,7 @@ const getGame = async function(name) {
     // const gameName = name;
     let config = {
         method: 'get',
-        url: `https://api.rawg.io/api/games?key=${API_KEY}&exact_match=true&search=${gameName}&page_size=1`,
+        url: `https://api.rawg.io/api/games?key=${API_KEY}&ordering=rating&search_exact=true&search=${gameName}&page_size=1`,
         headers: { }
     };
 
