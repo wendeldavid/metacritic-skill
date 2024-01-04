@@ -46,13 +46,17 @@ const GetGameScoreIntentHandler = {
     
         const gameName = intent.slots.game_name.value;
     
-        const gameData = await metacritic.getGame(gameName);
+        const gameData = await metacritic.getGame(gameName).data.results[0];
 
-        const gameScore = gameData.data.results[0].metacritic || Math.trunc(gameData.data.results[0].score);
+        let gameScore = gameData.metacritic;
+        
+        if (!gameScore) {
+            gameScore = (gameData.rating / gameData.rating_top) * 100;
+        }
         
         const speakOutput = interpolateString(requestAttributes.t("NORMAL_GAMESCORE_MESSAGE"), { gameName, gameScore });
 
-        let ironicText;
+        let ironicText = "";
 
         if (gameScore >= 90) {
             ironicText = interpolateString(requestAttributes.t("IRONIC_HIGH_SCORE_MESSAGE"), { gameName, gameScore });
