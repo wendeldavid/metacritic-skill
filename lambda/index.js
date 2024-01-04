@@ -46,7 +46,9 @@ const GetGameScoreIntentHandler = {
     
         const gameName = intent.slots.game_name.value;
     
-        const gameData = await metacritic.getGame(gameName).data.results[0];
+        const gameDataRaw = await metacritic.getGame(gameName);
+
+        const gameData = gameDataRaw.data.results[0];
 
         let gameScore = gameData.metacritic;
         
