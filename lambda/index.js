@@ -48,13 +48,23 @@ const GetGameScoreIntentHandler = {
     
         const gameDataRaw = await metacritic.getGame(gameName);
 
+        console.log("============== data raw");
+        console.log(gameDataRaw);
+
+        console.log("============== data");
         const gameData = gameDataRaw.data.results[0];
+        console.log(gameData);
 
         let gameScore = gameData.metacritic;
+        console.log("============== metacritic");
+        console.log(gameScore);
         
         if (!gameScore) {
             gameScore = (gameData.rating / gameData.rating_top) * 100;
         }
+
+        console.log("============== updated gamescore");
+        console.log(gameScore);
         
         const speakOutput = interpolateString(requestAttributes.t("NORMAL_GAMESCORE_MESSAGE"), { gameName, gameScore });
 
