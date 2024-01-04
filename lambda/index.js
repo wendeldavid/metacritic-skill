@@ -60,6 +60,8 @@ const GetGameScoreIntentHandler = {
             ironicText = interpolateString(requestAttributes.t("IRONIC_LOW_SCORE_MESSAGE"), { gameName, gameScore });
         }
 
+        const suffix = requestAttributes.t("SUFFIX_PROMPT");
+
         let outputSpeak = speakOutput;
 
         if (ironicText) {
@@ -68,6 +70,8 @@ const GetGameScoreIntentHandler = {
                 ${speakOutput}
                 <break time='1s'/>
                 <prosody>${ironicText}</prosody>
+                <break time='1s'/>
+                <prosody>${suffix}</prosody>
                 </speak>
             `;
         }

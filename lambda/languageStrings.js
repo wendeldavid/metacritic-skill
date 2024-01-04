@@ -28,6 +28,12 @@ module.exports = {
           "Por você estar pedindo por ele deve ser o seu favorito",
           "Achei foi pouco"
         ],
+        SUFFIX_PROMPT: [
+          "Deseja saber sobre outro jogo?",
+          "Deseja saber sobre outro joginho?",
+          "Quer tretar sobre outro jogo?",
+          "Se quiser outra nota o zé notinha pode pedir outro jogo"
+        ];
         HELLO_MESSAGE: [
           "Olá Zé Notinha, aqui você pode pedir uma nota de um jogo. Qual você deseja?",
           "Olá, bem vindo, aqui você pode descobrir a nota de um jogo e brigar com outras pessoas na internet, Qual jogo você deseja saber a nota?",
