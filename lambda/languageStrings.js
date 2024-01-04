@@ -30,7 +30,7 @@ module.exports = {
         ],
         SUFFIX_PROMPT: [
           "Deseja saber sobre outro jogo?",
-          "Deseja saber sobre outro joginho?",
+          "Deseja saber sobre outro joguinho?",
           "Quer tretar sobre outro jogo?",
           "Se quiser outra nota o zé notinha pode pedir outro jogo"
         ],
