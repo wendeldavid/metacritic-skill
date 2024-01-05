@@ -6,7 +6,7 @@ const getGame = async function(name) {
     const gameName = encodeURIComponent(name);
     let config = {
         method: 'get',
-        url: `https://api.rawg.io/api/games?key=${API_KEY}&ordering=rating&search_exact=true&page_size=1&search=${gameName}`,
+        url: `https://api.rawg.io/api/games?key=${API_KEY}&search_precise=true&page_size=1&search=${gameName}`,
         headers: { }
     };
 
