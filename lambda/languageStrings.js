@@ -67,7 +67,7 @@ module.exports = {
           "Boas tretas na internet",
           "Ok, quando precisar é só chamar",
           "Nota mentirosa essa última hein?",
-          "Isso é pra você ver que o jogo que você quer brigar na internet pra defender nem é lá essa coisas",
+          "Isso é pra você ver que o jogo que você quer brigar na internet pra defender nem é lá essas coisas",
         ],
         REPROMPT: [
           "Deseja saber de outro jogo? É só dizer o nome que eu procuro para você",
