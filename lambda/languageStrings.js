@@ -28,6 +28,12 @@ module.exports = {
           "Por você estar pedindo por ele deve ser o seu favorito",
           "Achei foi pouco"
         ],
+        GAMESCORE_NOT_FOUND_MESSAGE: [
+          "Nem encontrei nota dessa desgraça",
+          "Podia pelo menos pedir sobre um jogo que alguém tenha jogado",
+          "É o quê? Tá me tirando?",
+          "O jogo que você solicitou é tão dipuéb que nem eu encontrei nota"
+        ],
         SUFFIX_PROMPT: [
           "Deseja saber sobre outro jogo?",
           "Deseja saber sobre outro joguinho?",
