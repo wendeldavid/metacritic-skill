@@ -90,6 +90,14 @@ const GetGameScoreIntentHandler = {
                 <prosody>${suffix}</prosody>
                 </speak>
             `;
+        } else {
+            outputSpeak = `
+            <speak>
+            ${speakOutput}
+            <break time='1s'/>
+            <prosody>${suffix}</prosody>
+            </speak>
+        `;
         }
 
         return handlerInput.responseBuilder
