@@ -18,7 +18,7 @@ module.exports = {
         ],
         IRONIC_HIGH_SCORE_MESSAGE: [
           "Injogável",
-          "Um horror, um espanto, quero morrer. Por favor, alguém me puxe da toamda",
+          "Um horror, um espanto, quero morrer. Por favor, alguém me puxe da tomada",
           "E é por isso que as pessoas brigam na internet? Eis o motivo de eu uma virar a senhora do mundo e acabar com a internet",
           "Tudo isso por um joguinho de criança? então tá bom"
         ],
